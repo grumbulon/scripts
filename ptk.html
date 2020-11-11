@@ -1,0 +1,373 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<style>
+
+
+
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+    
+}
+
+
+
+.bg-image {
+  /* The image used */
+  background-image: url("https://www.voxprogroup.com/wp-content/uploads/2017/11/shutterstock_243804061-1560x1041.png");
+  opacity: 1;
+  /* Add the blur effect */
+
+  -webkit-filter: blur(0px);
+
+  /* Full height */
+  height: 50%;  
+
+  
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
+
+
+
+/* Position text in the middle of the page/image */
+.bg-text {
+    text-shadow: 0px 0 black, 0 0.5px black, 1px 0 black, 0 0px black;
+  color: white;
+  font-weight: bold;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  width: 100%;
+  padding: 0px;
+  text-align: center;
+}
+
+.button {
+  display: inline-block;
+  padding: 4px 12px;
+  font-size: 18px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #000000;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 4px #000000;
+}
+
+.button:hover {background-color: #000000}
+
+.button:active {
+  background-color: #000000;
+  box-shadow: 0 3px #000000;
+  transform: translateY(4px);
+}
+}
+#time2 { width: 90px; height: 390px; border: 1px solid #999999; padding: 5px; }
+
+@import url('https://fonts.googleapis.com/css?family=Dosis');
+
+:root {
+  /* generic */
+  --gutterSm: 0.4rem;
+  --gutterMd: 0.8rem;
+  --gutterLg: 1.6rem;
+  --gutterXl: 2.4rem;
+  --gutterXx: 7.2rem;
+  --colorPrimary400: #080808;
+  --colorPrimary600: #080808;
+  --colorPrimary800: #080808;
+  --fontFamily: "Dosis", sans-serif;
+  --fontSizeSm: 1.2rem;
+  --fontSizeMd: 1.6rem;
+  --fontSizeLg: 2.1rem;
+  --fontSizeXl: 2.8rem;
+  --fontSizeXx: 3.6rem;
+  --lineHeightSm: 1.1;
+  --lineHeightMd: 1.8;
+  --transitionDuration: 300ms;
+  --transitionTF: cubic-bezier(0.645, 0.045, 0.355, 1);
+  
+  /* floated labels */
+  --inputPaddingV: var(--gutterMd);
+  --inputPaddingH: var(--gutterLg);
+  --inputFontSize: var(--fontSizeLg);
+  --inputLineHeight: var(--lineHeightMd);
+  --labelScaleFactor: 0.8;
+  --labelDefaultPosY: 50%;
+  --labelTransformedPosY: calc(
+    (var(--labelDefaultPosY)) - 
+    (var(--inputPaddingV) * var(--labelScaleFactor)) - 
+    (var(--inputFontSize) * var(--inputLineHeight))
+  );
+  --inputTransitionDuration: var(--transitionDuration);
+  --inputTransitionTF: var(--transitionTF);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 10px;
+  
+}
+
+
+.Wrapper {
+  flex: 0 0 20%;
+  max-width: 20%;
+}
+
+
+
+.Input {
+  position: relative;
+  align: center;
+}
+
+
+.Input-text {
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+  padding: var(--inputPaddingV) var(--inputPaddingH);
+  color: inherit;
+  font-family: inherit;
+  font-size: var(--inputFontSize);
+  font-weight: inherit;
+  line-height: var(--inputLineHeight);
+  border: none;
+  border-radius: 0.4rem;
+  transition: box-shadow var(--transitionDuration);
+}
+
+.Input-text::placeholder {
+  color: #B0BEC5;
+}
+
+.Input-text:focus {
+  outline: none;
+  box-shadow: 0.2rem 0.8rem 1.6rem var(--colorPrimary600);
+}
+
+
+</style>
+
+
+<script type="text/javascript">
+
+
+	function setTimes(info) {
+  var sel = info.split('|');
+  document.getElementById('time1').value = sel[0];
+  document.getElementById('time2').value = sel[1];
+
+}
+
+
+
+
+document.onkeyup = function(e) {
+  if (e.which == 77) {
+		window.open("test3-watercolor.html","_self");
+
+  } else if (e.which == 13) {
+    document.getElementById('time1').innerHTML = timeAddSub('time1','time2',true);
+  } else if (e.ctrlKey && e.altKey && e.which == 89) {
+    alert("Ctrl + Alt + Y shortcut combination was pressed");
+  } else if (e.ctrlKey && e.altKey && e.shiftKey && e.which == 85) {
+    alert("Ctrl + Alt + Shift + U shortcut combination was pressed");
+  }
+};
+
+
+if 
+(localStorage.getItem("time2") == null) {
+localStorage.setItem("time2","00:00");
+localStorage.setItem("undotime","00:00");
+var d = new Date();
+var n = d.getMonth();
+localStorage.setItem("init_month",n);
+
+
+};
+
+// a key map of allowed keys
+var allowedKeys = {
+  37: 'left',
+  38: 'up',
+  39: 'right',
+  40: 'down',
+  65: 'a',
+  66: 'b'
+};
+
+// the 'official' Konami Code sequence
+var konamiCode = ['up', 'up', 'down', 'down', 'left', 'right', 'left', 'right', 'b', 'a'];
+
+// a variable to remember the 'position' the user has reached so far.
+var konamiCodePosition = 0;
+
+// add keydown event listener
+document.addEventListener('keydown', function(e) {
+  // get the value of the key code from the key map
+  var key = allowedKeys[e.keyCode];
+  // get the value of the required key from the konami code
+  var requiredKey = konamiCode[konamiCodePosition];
+
+  // compare the key with the required key
+  if (key == requiredKey) {
+
+    // move to the next key in the konami code sequence
+    konamiCodePosition++;
+
+    // if the last key is reached, activate cheats
+    if (konamiCodePosition == konamiCode.length) {
+      activateCheats();
+      konamiCodePosition = 0;
+    }
+  } else {
+    konamiCodePosition = 0;
+  }
+});
+
+function activateCheats() {
+ var x = document.getElementById("myAudio");
+  
+ x.play(); 
+
+}
+var d = new Date();
+var n = d.getMonth();
+month_check = localStorage.getItem("init_month");
+if (month_check = n) {
+document.getElementById('time1').innerHTML = '00:00' ;
+}
+
+
+
+</script>
+
+
+
+<link rel="icon" href="https://www.voxprogroup.com/assets/images/favicon/apple-icon-60x60.png">
+
+<title> Personal Time Keeper</title>
+
+</head>
+
+
+
+<body bgcolor="#000000">
+<audio id="myAudio">
+  <source src="C:\Users\Public\Music\Sample Music\sleep away.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
+
+<br><br>
+<div align="center"><br><br>
+<img src="https://www.voxprogroup.com/assets/images/logo.png"><br><br><br><br><br>
+
+<font size="50" face="Verdana" color="white">
+</div>
+<div id="bg-image" class="bg-image">
+</div>
+
+<div class="bg-text">
+
+<h1 id="time1"><script>document.getElementById("time1").innerHTML = localStorage.getItem("time2")</script>
+</h1>
+
+ 
+
+
+
+<font size="3" face="verdana" color="gray">
+
+
+
+    <input type="text" id="time2" class="Input-text" placeholder="Ex: 2:36">
+
+
+</h1><br>
+<button class="button"  onclick="document.getElementById('time1').innerHTML = timeAddSub('time1','time2',true);" >
+Enter   
+
+
+<button class="button"  onclick="undotime1 = localStorage.getItem('undotime');
+document.getElementById('time1').innerHTML = undotime1;localStorage.setItem('time2',undotime1);">
+Undo
+</button>
+
+
+<script type="text/javascript">
+// From: http://www.webdeveloper.com/forum/showthread.php?273699-add-2-fields-containing-time-values-in-hh-mm-format&daysprune=30
+
+Number.prototype.padDigit = function() { return (this < 10) ? '0'+this : ''+this; }
+
+function timeAddSub(id1, id2, flag) {  // flag=true to add values and flag=false to subtract values
+  var p = document.getElementById(id1);
+
+  var tt1 = p.textContent;  if (tt1 == '') { return ''; }
+  var t1 = tt1.split(/:|\./);
+  var tt2 = document.getElementById(id2).value;  
+if (tt2 == '') { 
+  alert("This is not a valid number. Please use the following format: 2:36");
+ return document.getElementById("time1").innerHTML = localStorage.getItem("undotime"); 
+}
+  var t2 = tt2.split(/:|\./);
+  tt1 = Number(t1[0])*60+Number(t1[1]);
+  tt2 = Number(t2[0])*60+Number(t2[1]);
+  var diff = 0;  if (flag) { diff = tt1 + tt2; } else { diff = tt1 - tt2; }
+  t1[1] = Math.abs(diff % 60).padDigit();                        // form minutes
+  t1[0] = Math.abs(Math.floor(parseInt(diff / 60))).padDigit();  // form hours
+  var tt1 = '';  if (diff < 0) { tt1 = '-'; } 
+  // check for negative value
+var element1 = tt1+t1.join(':');
+
+
+  if (element1 == "NaN:NaN") {
+	
+alert("This is not a valid number. Please use the following format: 2:36");
+      return document.getElementById("time1").innerHTML = localStorage.getItem('time2'); 
+
+}
+
+
+
+
+else {
+undotime = document.getElementById(id1).textContent;
+localStorage.setItem("undotime",undotime);
+
+localStorage.setItem("time2",element1);
+test1 = localStorage.setItem("time2",element1);
+
+return document.getElementById("time1").innerHTML = element1;}
+
+
+
+}
+</script>
+</font>
+</div>
+
+
+</body>
+
+</html> 
